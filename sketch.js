@@ -15,6 +15,8 @@ var cargoBoxCollected = 0
 var enginesRunning = 4
 var speedofAircraft = 480;
 var restart, restartImg;
+var airplaneCloudAnimation,airplaneCloudAnimationImg;
+var airTraffic, airTrafficImg;
 function preload(){
   airplaneImg = loadImage("airplane.png");
   cargoBoxImg = loadImage("cargoBox.png")
@@ -24,9 +26,11 @@ function preload(){
   backgroundImg = loadImage("background.jpg")
   //waitingInLobbySound = loadSound("wait.mp3")
   runwayImg = loadImage("runway.png");
-  gameOverImg = loadImage("gameover.png")
+  gameOverImg = loadImage("gameOver.png")
   restartImg = loadImage("restart.jpg")
   //gameOverSound = loadSound("lose.wav")
+  airplaneCloudAnimationImg = loadImage("airplaneCloudAnimation.png")
+  airTrafficImg = loadImage("airTraffic.jpg");
 }
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -50,8 +54,17 @@ restart = createSprite(width/2,height/2 + 250,200,200);
   button = createSprite(width/2-100,height/2,100,100);
   button.addImage(buttonImg);
   button.scale = 0.22;
+  airplaneCloudAnimation = createSprite(200,150,20,20);
+  airplaneCloudAnimation.addImage(airplaneCloudAnimationImg)
+  airplaneCloudAnimation.scale = 0.5
+
+  airTraffic = createSprite(1260,105,20,20);
+  airTraffic.addImage(airTrafficImg);
+  airTraffic.scale = 0.3;
   cargoBoxGroup = new Group();
   geeseGroup = new Group();
+  rotateSprite(airTraffic);
+ 
 }
 
 function draw(){
@@ -62,6 +75,8 @@ textSize(50);
 text("Airplane Simulator",width/2-250,height/2-150)
 background(runwayImg)
 button.visible = true;
+airplaneCloudAnimation.visible = true;
+airTraffic.visible = true;
 gameOver.visible = false;
 restart.visible = false;
 //waitingInLobbySound.play();
@@ -114,6 +129,7 @@ airplane.visible = false;
 if(mousePressedOver(restart)){
   reset();
 }
+
 drawSprites();
 }
 function handlePlayerControls(){
@@ -158,4 +174,8 @@ function reset(){
   gameOver.visible = false;
   restart.visible = false;
   
+}
+
+function rotateSprite(sprite) {
+  sprite.rotation +=10;
 }
